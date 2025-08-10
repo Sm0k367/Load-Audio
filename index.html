@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Chrono Cruise — Lyrics Visual Video Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --fg: #f7f7fb;
+            --dim: #bfc3d1;
+            --bg: #0b0c12;
+            --accent: #00ffc6;
+            --accent2: #ff3d81;
+            --accent3: #ffd166;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: var(--fg);
+        }
+
+        body {
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .stage {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(1200px 600px at 60% 40%, #10121a 0%, #06070a 60%, #000 100%);
+            transition: background 1200ms ease;
+        }
+
+        .bg-blob, .bg-blob2, .bg-blob3 {
+            position: absolute;
+            inset: -20%;
+            filter: blur(80px);
+            opacity: 0.35;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            animation: float 16s ease-in-out infinite;
+        }
+
+        .bg-blob {
+            background: radial-gradient(40% 40% at 20% 30%, #1a3cff 0%, transparent 60%);
+        }
+
+        .bg-blob2 {
+            background: radial-gradient(40% 40% at 80% 60%, #ff3da0 0%, transparent 60%);
+            animation-duration: 20s;
+        }
+
+        .bg-blob3 {
+            background: radial-gradient(30% 30% at 40% 80%, #00ffc6 0%, transparent 70%);
+            animation-duration: 24s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+            50% {
+                transform: translate3d(2%, -2%, 0) scale(1.05);
+            }
+            100% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
+
+        /* Themes for sections */
+        .theme-intro .bg-blob {
+            background: radial-gradient(40% 40% at 25% 30%, #3b82f6 0%, transparent 60%);
+        }
+
+        .theme-intro .bg-blob2 {
+            background: radial-gradient(40% 40% at 80% 70%, #8b5cf6 0%, transparent 60%);
+        }
+
+        .theme-park .bg-blob {
+            background: radial-gradient(40% 40% at 20% 30%, #06b6d4 0%, transparent 60%);
+        }
+
+        .theme-park .bg-blob2 {
+            background: radial-gradient(40% 40% at 80% 60%, #22d3ee 0%, transparent 60%);
+        }
+
+        .theme-chorus .bg-blob {
+            background: radial-gradient(40% 40% at 20% 30%, #00ffc6 0%, transparent 60%);
+        }
+
+        .theme-chorus .bg-blob2 {
+            background: radial-gradient(40% 40% at 80% 60%, #ffd166 0%, transparent 60%);
+        }
+
+        .theme-west .bg-blob {
+            background: radial-gradient(40% 40% at 25% 30%, #ff9f1c 0%, transparent 60%);
+        }
+
+        .theme-west .bg-blob2 {
+            background: radial-gradient(40% 40% at 80% 60%, #ff3d81 0%, transparent 60%);
+        }
+
+        .theme-east .bg-blob {
+            background: radial-gradient(40% 40% at 20% 30%, #60a5fa 0%, transparent 60%);
+        }
+
+        .theme-east .bg-blob2 {
+            background: radial-gradient(40% 40% at 80% 60%, #94a3b8 0%, transparent 60%);
+        }
+
+        .theme-outro .bg-blob {
+            background: radial-gradient(40% 40% at 25% 30%, #14b8a6 0%, transparent 60%);
+        }
+
+        .theme-outro .bg-blob2 {
+            background: radial-gradient(40% 40% at 80% 60%, #7c3aed 0%, transparent 60%);
+        }
+
+        .lyric-wrap {
+            position: relative;
+            width: min(1100px, 92vw);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .section-label {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(255, 255, 255, 0.06);
+            padding: .35rem .6rem;
+            border-radius: .5rem;
+            font-size: .8rem;
+            color: var(--dim);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            backdrop-filter: blur(6px);
+        }
+
+        .lyric {
+            font-family: "Bebas Neue", Inter, sans-serif;
+            font-size: clamp(28px, 6vmin, 76px);
+            line-height: 1.06;
+            letter-spacing: .02em;
+            text-shadow: 0 4px 24px rgba(0, 0, 0, .45);
+            opacity: 0;
+            transform: translate3d(0, 20px, 0) scale(0.98);
+            will-change: transform, opacity;
+            animation: inUp 700ms cubic-bezier(.2, .8, .2, 1) forwards;
+        }
+
+        .lyric.small {
+            font-size: clamp(18px, 3.5vmin, 32px);
+            color: #dbeafe;
+            opacity: 0.9;
+        }
+
+        .credit {
+            margin-top: 1rem;
+            color: var(--dim);
+            font-size: .9rem;
+            letter-spacing: .05em;
+        }
+
+        @keyframes inUp {
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
+
+        .anim-left {
+            animation: inLeft 700ms cubic-bezier(.2, .8, .2, 1) forwards;
+        }
+
+        @keyframes inLeft {
+            from {
+                opacity: 0;
+                transform: translate3d(-30px, 0, 0) skewX(-4deg);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .anim-right {
+            animation: inRight 700ms cubic-bezier(.2, .8, .2, 1) forwards;
+        }
+
+        @keyframes inRight {
+            from {
+                opacity: 0;
+                transform: translate3d(30px, 0, 0) skewX(4deg);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .anim-glitch {
+            animation: glitchIn 700ms ease forwards;
+        }
+
+        @keyframes glitchIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+                filter: hue-rotate(0deg);
+            }
+            40% {
+                opacity: 1;
+                transform: translateY(-2px);
+            }
+            45% {
+                transform: translate(2px, 0);
+                text-shadow: -2px 0 var(--accent2), 2px 0 var(--accent);
+            }
+            55% {
+                transform: translate(-2px, 0);
+                text-shadow: 2px 0 var(--accent2), -2px 0 var(--accent);
+            }
+            70% {
+                transform: translate(0, 0);
+                text-shadow: none;
+            }
+            100% {
+                filter: hue-rotate(10deg);
+            }
+        }
+
+        .stereo-pan-lr {
+            animation: panLR 4s ease-in-out both;
+        }
+
+        .stereo-pan-rl {
+            animation: panRL 4s ease-in-out both;
+        }
+
+        @keyframes panLR {
+            from {
+                transform: translateX(-6vw);
+            }
+            to {
+                transform: translateX(6vw);
+            }
+        }
+
+        @keyframes panRL {
+            from {
+                transform: translateX(6vw);
+            }
+            to {
+                transform: translateX(-6vw);
+            }
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 1.2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            width: min(1000px, 92vw);
+            background: rgba(10, 10, 16, .5);
+            padding: .6rem .8rem;
+            border-radius: .8rem;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: .5rem;
+            cursor: pointer;
+            user-select: none;
+            background: linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .06));
+            border: 1px solid rgba(255, 255, 255, .12);
+            transition: transform .15s ease, background .2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .btn:active {
+            transform: translateY(1px) scale(.98);
+        }
+
+        .file {
+            font-size: .9rem;
+            color: var(--dim);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file label {
+            padding: .45rem .7rem;
+            border: 1px dashed rgba(255, 255, 255, .25);
+            border-radius: .5rem;
+            cursor: pointer;
+            transition: border-color .2s ease;
+        }
+
+        .file label:hover {
+            border-color: rgba(255, 255, 255, .4);
+        }
+
+        .progress {
+            flex: 1;
+            height: 10px;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 999px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .progress .bar {
+            position: absolute;
+            inset: 0;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+            border-radius: 999px;
+            transition: width .1s linear;
+        }
+
+        .time {
+            font-variant-tabular-nums: tabular-nums;
+            font-size: .9rem;
+            color: var(--dim);
+            min-width: 120px;
+            text-align: right;
+        }
+
+        .helper {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: var(--dim);
+            font-size: .85rem;
+            opacity: .9;
+            background: rgba(255, 255, 255, .06);
+            padding: .35rem .6rem;
+            border-radius: .5rem;
+            backdrop-filter: blur(6px);
+        }
+
+        .dropzone {
+            position: absolute;
+            inset: 0;
+            border: 2px dashed rgba(255, 255, 255, .18);
+            border-radius: 12px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: #e5e7eb;
+            font-weight: 600;
+            background: rgba(0, 0, 0, .35);
+            backdrop-filter: blur(4px);
+        }
+
+        .dropzone.show {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="theme-intro">
+    <div class="stage" id="stage">
+        <div class="bg-blob"></div>
+        <div class="bg-blob2"></div>
+        <div class="bg-blob3"></div>
+
+        <div class="section-label" id="sectionLabel">Intro</div>
+
+        <div class="lyric-wrap">
+            <div id="lyric" class="lyric">Drop your audio and press Play</div>
+            <div class="credit">Chrono Cruise (Stereo FX Club Mix) — Kinetic Lyrics Visual</div>
+        </div>
+
+        <div class="helper">Space: Play/Pause • ←/→: -/+5s</div>
+
+        <div class="controls">
+            <div class="btn" id="playBtn" title="Play/Pause">▶</div>
+            <div class="file">
+                <label for="fileInput">Load Audio</label>
+                <input type="file" id="fileInput" accept="audio/*" />
+            </div>
+            <div class="progress" id="progress">
+                <div class="bar" id="bar"></div>
+            </div>
+            <div class="time" id="timeLabel">00:00 / 08:00</div>
+            <audio id="audio" preload="none" crossorigin="anonymous"></audio>
+        </div>
+
+        <div class="dropzone" id="dropzone">Drop your MP3/WAV here</div>
+    </div>
+
+    <script>
+        // Utility: mm:ss to seconds
+        const toS = s => {
+            const [m, sec] = s.split(':').map(Number);
+            return m * 60 + sec;
+        };
+        const pad = n => String(Math.floor(n)).padStart(2, '0');
+        const fmt = t => `${pad(t / 60)}:${pad(t % 60)}`;
+
+        // Timeline: lyrics + cues (8:00)
+        const TL = [
+            {t: toS("00:00"), text: "(Vinyl crackle, wide pad bloom; stereo whoosh L→R, low-pass rising)", kind: "sfx", anim: "anim-glitch"},
+            {t: toS("00:10"), text: "Strap in the Chrono Coupe—bend the beat, bend the rules.", kind: "spoken", anim: "anim-left", stereo: "lr"},
+            {t: toS("00:20"), text: "Hands on wax, clocks off—time drips smooth like liquid jewels.", kind: "spoken", anim: "anim-right", stereo: "rl"},
+            {t: toS("00:30"), text: "Left meets right in the light—ride the groove through day and night.", kind: "spoken", anim: "anim-left"},
+            {t: toS("00:40"), text: "Count it—one turn, two spins—prime the drop, let it ignite.", kind: "spoken", anim: "anim-right"},
+            {t: toS("00:50"), text: "(Scratch tease: chirp-chop, delay ping-pong; shaker pre-echo)", kind: "sfx", anim: "anim-glitch"},
+            // Verse 1
+            {t: toS("01:05"), text: "Back to the park jams—lamps low, hands high—boom-bap lungs, no maps.", kind: "lyric"},
+            {t: toS("01:20"), text: "Needle kisses pulse—crate dust halos—breakbeat halos overlap.", kind: "lyric"},
+            {t: toS("01:35"), text: "Fader confessions—flare to a stab—transform the matter, pivot the lap.", kind: "lyric"},
+            {t: toS("01:50"), text: "Time-wheel spins—we stitch the scene—old soul sparks in a new-era wrap.", kind: "lyric"},
+            // Chorus 1
+            {t: toS("02:05"), text: "Ride the vibe in the Time Machine tonight—city lights, we taking flight.", kind: "lyric", stereo: "lr"},
+            {t: toS("02:15"), text: "Feel the drums ignite your spine—past and future, one straight line.", kind: "lyric"},
+            {t: toS("02:25"), text: "Flip the script, distort the night—every heartbeat bending time.", kind: "lyric", stereo: "rl"},
+            // Bridge 1 → West
+            {t: toS("02:30"), text: "(Tape rewind, backspin; filter sweep to Westward air)", kind: "sfx", anim: "anim-glitch"},
+            {t: toS("02:35"), text: "[Talkbox and ankle bells shimmer in the mix]", kind: "sfx"},
+            {t: toS("02:45"), text: "Coastline calling—pan the pad left, sax glow right.", kind: "adlib", stereo: "lr"},
+            {t: toS("02:55"), text: "(Riser + beat juggle: snare doubles, then mutes)", kind: "sfx"},
+            // Verse 2 — West Coast
+            {t: toS("03:05"), text: "Sunset chrome on the boulevard—lowriders hum like steel guitars.", kind: "lyric"},
+            {t: toS("03:20"), text: "Sine waves kiss the open air—palms keep time, bass hits hard.", kind: "lyric"},
+            {t: toS("03:35"), text: "Top-down chatter—crew laughs loud—golden hour, gasoline stars.", kind: "lyric"},
+            {t: toS("03:50"), text: "Flare-cut, crab-scratch—glide and lean—coastline cool in tangerine bars.", kind: "lyric"},
+            // Chorus 2
+            {t: toS("04:05"), text: "Ride the vibe in the Time Machine tonight—city lights, we taking flight.", kind: "lyric"},
+            {t: toS("04:15"), text: "Feel the drums ignite your spine—past and future, one straight line.", kind: "lyric"},
+            {t: toS("04:25"), text: "Flip the script, distort the night—every heartbeat bending time.", kind: "lyric"},
+            // Bridge 2 → East
+            {t: toS("04:30"), text: "(Radio tuner clicks; AM grit melts to subway rumble)", kind: "sfx"},
+            {t: toS("04:35"), text: "[Hi-hat steam vent; vinyl hiss; footstep foley]", kind: "sfx", anim: "anim-glitch"},
+            {t: toS("04:45"), text: "Northbound sparks under steel—letters sing in chrome.", kind: "adlib", stereo: "rl"},
+            {t: toS("04:55"), text: "(Scratch: scribble → reverse → hush)", kind: "sfx"},
+            // Verse 3 — East Coast
+            {t: toS("05:05"), text: "Steel-toe steps on a brownstone stair—bodega bells frame city air.", kind: "lyric"},
+            {t: toS("05:20"), text: "Cipher circle—heavy words—ink like blades; we come prepared.", kind: "lyric"},
+            {t: toS("05:35"), text: "Bricks keep echoes, trains write names—spark-lit tunnels, legend flares.", kind: "lyric"},
+            {t: toS("05:50"), text: "Jab-step cadence, timbal snap—bar by bar, we bridge repairs.", kind: "lyric"},
+            // Chorus 3
+            {t: toS("06:05"), text: "Ride the vibe in the Time Machine tonight—city lights, we taking flight.", kind: "lyric", stereo: "lr"},
+            {t: toS("06:15"), text: "Feel the drums ignite your spine—past and future, one straight line.", kind: "lyric"},
+            {t: toS("06:25"), text: "Flip the script, distort the night—every heartbeat bending time.", kind: "lyric", stereo: "rl"},
+            // Outro
+            {t: toS("06:35"), text: "West to East, South to North—global pulse, we carry forth.", kind: "lyric"},
+            {t: toS("06:50"), text: "Vinyl prayers, digital chants—code in the drums makes spirits dance.", kind: "lyric"},
+            {t: toS("07:05"), text: "Afro-swing bones, jazz-kissed veins—sax in fog, Rhodes in rain.", kind: "lyric"},
+            {t: toS("07:20"), text: "Turntablism tongue—clicks and frays—scratch-speak stories across the days.", kind: "lyric"},
+            {t: toS("07:35"), text: "One world, one beat—crowd and street—when kick and heart sync, complete.", kind: "lyric"},
+            {t: toS("07:50"), text: "(Beat juggle: two kicks, one snare—half-time flip, filter close)", kind: "sfx"},
+            {t: toS("08:00"), text: "(Final backspin—reverb tail—needle lift; crowd cheer → hush)", kind: "sfx"}
+        ];
+
+        // Section themes
+        const THEMES = [
+            {t: toS("00:00"), klass: "theme-intro", label: "Intro"},
+            {t: toS("01:00"), klass: "theme-park", label: "Park Jam (Verse 1)"},
+            {t: toS("02:00"), klass: "theme-chorus", label: "Chorus"},
+            {t: toS("02:30"), klass: "theme-park", label: "Bridge"},
+            {t: toS("03:00"), klass: "theme-west", label: "West Coast"},
+            {t: toS("04:00"), klass: "theme-chorus", label: "Chorus"},
+            {t: toS("04:30"), klass: "theme-west", label: "Bridge"},
+            {t: toS("05:00"), klass: "theme-east", label: "East Coast"},
+            {t: toS("06:00"), klass: "theme-chorus", label: "Chorus"},
+            {t: toS("06:30"), klass: "theme-outro", label: "Outro"}
+        ];
+
+        const stage = document.getElementById('stage');
+        const lyricEl = document.getElementById('lyric');
+        const playBtn = document.getElementById('playBtn');
+        const audio = document.getElementById('audio');
+        const progress = document.getElementById('progress');
+        const bar = document.getElementById('bar');
+        const timeLabel = document.getElementById('timeLabel');
+        const label = document.getElementById('sectionLabel');
+        const fileInput = document.getElementById('fileInput');
+        const dropzone = document.getElementById('dropzone');
+
+        let idx = 0;
+        let themeIdx = 0;
+        let durationHint = 8 * 60;
+
+        function setLyric(entry) {
+            lyricEl.className = 'lyric';
+            if (entry.kind === 'sfx' || entry.kind === 'adlib' || entry.kind === 'spoken') {
+                lyricEl.classList.add('small');
+            }
+            if (entry.anim) {
+                lyricEl.classList.add(entry.anim);
+            }
+            if (entry.stereo === 'lr') lyricEl.classList.add('stereo-pan-lr');
+            if (entry.stereo === 'rl') lyricEl.classList.add('stereo-pan-rl');
+            lyricEl.textContent = entry.text;
+        }
+
+        function updateTheme(t) {
+            while (themeIdx + 1 < THEMES.length && t >= THEMES[themeIdx + 1].t) {
+                themeIdx++;
+            }
+            const th = THEMES[themeIdx];
+            if (th) {
+                stage.className = 'stage ' + th.klass;
+                label.textContent = th.label;
+            }
+        }
+
+        function updateLyric(t) {
+            while (idx + 1 < TL.length && t >= TL[idx + 1].t) {
+                idx++;
+                setLyric(TL[idx]);
+            }
+            while (idx > 0 && t < TL[idx].t) {
+                idx--;
+                setLyric(TL[idx]);
+            }
+        }
+
+        function updateProgress() {
+            const t = audio.currentTime || 0;
+            const d = (audio.duration && isFinite(audio.duration)) ? audio.duration : durationHint;
+            bar.style.width = `${Math.min(100, (t / d) * 100)}%`;
+            timeLabel.textContent = `${fmt(t)} / ${fmt(d)}`;
+            updateLyric(t);
+            updateTheme(t);
+        }
+
+        audio.addEventListener('timeupdate', updateProgress);
+        audio.addEventListener('loadedmetadata', () => {
+            if (isFinite(audio.duration)) durationHint = audio.duration;
+            timeLabel.textContent = `${fmt(0)} / ${fmt(durationHint)}`;
+        });
+        audio.addEventListener('ended', () => {
+            playBtn.textContent = '▶';
+        });
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play().catch(e => console.log('Play failed:', e));
+                playBtn.textContent = '⏸';
+            } else {
+                audio.pause();
+                playBtn.textContent = '▶';
+            }
+        });
+
+        progress.addEventListener('click', (e) => {
+            const rect = progress.getBoundingClientRect();
+            const pct = (e.clientX - rect.left) / rect.width;
+            const d = (audio.duration && isFinite(audio.duration)) ? audio.duration : durationHint;
+            audio.currentTime = pct * d;
+            updateProgress();
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                playBtn.click();
+            }
+            if (e.code === 'ArrowRight') {
+                audio.currentTime = Math.min((audio.duration || durationHint), audio.currentTime + 5);
+            }
+            if (e.code === 'ArrowLeft') {
+                audio.currentTime = Math.max(0, audio.currentTime - 5);
+            }
+        });
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files?.[0];
+            if (file) {
+                audio.src = URL.createObjectURL(file);
+                audio.load();
+                idx = 0;
+                themeIdx = 0;
+                setLyric(TL[0]);
+                updateTheme(0);
+            }
+        });
+
+        // Enhanced drag and drop
+        ['dragenter', 'dragover'].forEach(evt => {
+            window.addEventListener(evt, (e) => {
+                e.preventDefault();
+                dropzone.classList.add('show');
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(evt => {
+            window.addEventListener(evt, (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('show');
+            });
+        });
+
+        window.addEventListener('drop', (e) => {
+            const file = e.dataTransfer?.files?.[0];
+            if (file && file.type.startsWith('audio/')) {
+                audio.src = URL.createObjectURL(file);
+                audio.load();
+                idx = 0;
+                themeIdx = 0;
+                setLyric(TL[0]);
+                updateTheme(0);
+            }
+        });
+
+        // Initialize
+        setLyric(TL[0]);
+        updateTheme(0);
+        timeLabel.textContent = `00:00 / 08:00`;
+    </script>
+</body>
+</html>
